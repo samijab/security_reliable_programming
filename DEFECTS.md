@@ -69,3 +69,16 @@ again. The token is no longer printed.
 - If the payment gateway raises an error, we assume no money was taken.
 - FREESHIP is accepted but changes nothing because the app has no shipping cost.
 - Totals are rounded to 2 decimal places.
+
+## Test Results
+```
+python -m pytest -q
+..............                                                           [100%]
+14 passed in 0.31s
+```
+12 unit tests cover the fixes: `tests/test_cart.py` ***Fixes 1–5***,
+`tests/test_repository.py` (Fix 6) and `tests/test_checkout.py` ***Fixes 7–8***.
+The other 2 are the original smoke tests.
+
+## CI
+Successful GitHub Actions run: https://github.com/samijab/security_reliable_programming/actions/runs/44980104959
