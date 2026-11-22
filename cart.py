@@ -8,7 +8,6 @@ class ShoppingCart:
         self.repository = repository
         self.lines = []
         self.discount_code = None
-        self.discounted_total = None
 
     def add_item(self, sku, quantity):
         if not isinstance(quantity, int) or quantity <=0:
@@ -47,25 +46,22 @@ class ShoppingCart:
         return sum(line.unit_price * line.quantity for line in self.lines)
 
     def total(self):
-        if self.discounted_total is not None:
-            return self.discounted_total
-        return self.subtotal()
+        amount = self.subtotal()
+        if self.discount_code == 'WELCOME10':
+            amount *= 0.9
+        elif self.discount_code == 'STUDENT20':
+            amount *= 0.8
+        elif self.discount_code == 'SAVE15':
+            amount -= 15
+        return round(amount, 2)
 
     def apply_discount(self, code):
-        amount = self.total()
-        if code == 'WELCOME10':
-            amount *= 0.9
-        elif code == 'STUDENT20':
-            amount *= 0.8
-        elif code == 'SAVE15':
-            amount -= 15
-        elif code == 'FREESHIP':
-            print('Shipping is free')
-        else:
+        if code not in ('WELCOME10', 'STUDENT20', 'SAVE15', 'FREESHIP'):
             print('Invalid coupon')
             return False
+        if code == 'FREESHIP':
+            print('Shipping is free')
         self.discount_code = code
-        self.discounted_total = amount
         return True
 
     def load(self):

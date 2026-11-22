@@ -28,6 +28,6 @@ class CheckoutService:
             status = 'payment_error'
         order_id = self.repository.save_order(cart.user_id, amount, status, request_id)
         cart.lines.clear()
-        cart.discounted_total = None
+        cart.discounted_code = None
         cart.save()
         return OrderResult(order_id, status, amount)
