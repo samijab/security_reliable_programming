@@ -10,14 +10,17 @@ class CheckoutService:
     def checkout(self, cart, payment_token, request_id):
         if len(cart.lines) == 0:
             return OrderResult(None, 'empty', 0)
+        
+        if not request_id:
+            return OrderResult(None, 'missing_request_id', 0)
+
+        # Same request sent again: return the first result / don't charge again.
+        existing = self.repository.find_order_by_request_id(request_id)
+        if existing:
+            order_id, status, amount = existing
+            return OrderResult(order_id, status, amount)
+
         amount = cart.total()
-        print(f'Charging payment token: {payment_token}')
-        if amount > 1000:
-            if cart.user_id:
-                if not request_id:
-                    print('Missing request id')
-                else:
-                    print('Large order')
         # Make sure everything is still in stock before charging.
         for line in cart.lines:
             product = self.repository.get_product(line.sku)
