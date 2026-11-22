@@ -19,7 +19,7 @@ class ShoppingCart:
             return False
         existing = next((x for x in self.lines if x.sku == sku), None)
         already_in_cart = existing.quantity if existing else 0 
-        if product.stock < quantity:
+        if product.stock < already_in_cart + quantity:
             print('Not enough stock')
             return False
         if existing:
