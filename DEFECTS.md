@@ -1,3 +1,5 @@
+# Defects and Fixes
+
 ## 1. No quantity Validation 
 **Where:** `cart.py`, `add_item()` and `remove_item()`
 **Problem:** Quantities never checked so zero negative or non int amounts were accepted. When I called `remove _item` with a negative number it actually added items to the cart.
