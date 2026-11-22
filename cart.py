@@ -11,6 +11,9 @@ class ShoppingCart:
         self.discounted_total = None
 
     def add_item(self, sku, quantity):
+        if not isinstance(quantity, int) or quantity <=0:
+            print("Invalid quantity")
+            return False
         product = self.repository.get_product(sku)
         if not product:
             print('Unknown product')
@@ -26,6 +29,9 @@ class ShoppingCart:
         return True
 
     def remove_item(self, sku, quantity=None):
+        if quantity is not None and (not isinstance(quantity, int) or quantity <= 0):
+            print("Invalid quanitity")
+            return False
         for line in self.lines:
             if line.sku == sku:
                 if quantity is None or quantity >= line.quantity:
