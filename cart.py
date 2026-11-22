@@ -53,7 +53,7 @@ class ShoppingCart:
             amount *= 0.8
         elif self.discount_code == 'SAVE15':
             amount -= 15
-        return round(amount, 2)
+        return round(max(amount, 0), 2)
 
     def apply_discount(self, code):
         if code not in ('WELCOME10', 'STUDENT20', 'SAVE15', 'FREESHIP'):
