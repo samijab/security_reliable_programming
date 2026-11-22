@@ -61,3 +61,9 @@ The payment token was also printed to the console.
 already exists, that original result is returned and the card is not charged
 again. The token is no longer printed.
 
+## Assumptions
+- A request id represents one checkout attempt. Reusing it returns the
+  original result even if it was declined; to retry, a new request id is used.
+- If the payment gateway raises an error, we assume no money was taken.
+- FREESHIP is accepted but changes nothing because the app has no shipping cost.
+- Totals are rounded to 2 decimal places.
