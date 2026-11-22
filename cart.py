@@ -65,6 +65,7 @@ class ShoppingCart:
         return True
 
     def load(self):
+        self.lines = []
         for sku, quantity in self.repository.get_saved_cart(self.user_id):
             self.add_item(sku, quantity)
 
